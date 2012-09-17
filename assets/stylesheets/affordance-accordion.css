@@ -1,0 +1,27 @@
+#affordance-accordion {
+  margin-bottom: 25px;
+}
+
+.accordion {
+  margin-bottom: 0;
+}
+.accordion-group,
+.accordion-heading,
+.accordion-toggle,
+.affordance {
+  width: 500px;
+}
+.affordance-category-link {
+  font-size: 14px;
+  font-weight: bold;
+}
+.actor-name {
+  font-weight: bold;
+}
+
+#affordances-clone {
+  position: absolute;
+  bottom: -1000px;
+  right: -1000px;
+  display: none;
+}

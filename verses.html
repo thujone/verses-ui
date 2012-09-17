@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Versu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Versu is a game of interactive fiction.">
+    <meta name="author" content="Linden Lab">
+    
+    <link rel="shortcut icon" href="assets/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
+
+    <link href="assets/stylesheets/bootstrap.css" rel="stylesheet">
+    <link href="assets/stylesheets/bootstrap-responsive.css" rel="stylesheet">
+    <link href="assets/stylesheets/application.css" rel="stylesheet">
+    <link href="assets/stylesheets/affordance-accordion.css" rel="stylesheet">
+    <link href="assets/stylesheets/character-carousel.css" rel="stylesheet">
+    <link href="assets/stylesheets/story-box.css" rel="stylesheet">
+    
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="assets/javascripts/jquery/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="assets/javascripts/jquery/jquery.hoverintent.js"></script>
+    <script type="text/javascript" src="assets/javascripts/jquery/jquery-ui-1.8.21.custom.min.js"></script>
+    <script type="text/javascript" src="assets/javascripts/bootstrap/bootstrap-transition.js"></script>
+    <script type="text/javascript" src="assets/javascripts/bootstrap/bootstrap-alert.js"></script>
+    <script type="text/javascript" src="assets/javascripts/bootstrap/bootstrap-modal.js"></script>
+    <script type="text/javascript" src="assets/javascripts/bootstrap/bootstrap-dropdown.js"></script>
+    <script type="text/javascript" src="assets/javascripts/bootstrap/bootstrap-scrollspy.js"></script>
+    <script type="text/javascript" src="assets/javascripts/bootstrap/bootstrap-tab.js"></script>
+    <script type="text/javascript" src="assets/javascripts/bootstrap/bootstrap-tooltip.js"></script>
+    <script type="text/javascript" src="assets/javascripts/bootstrap/bootstrap-popover.js"></script>
+    <script type="text/javascript" src="assets/javascripts/bootstrap/bootstrap-button.js"></script>
+    <script type="text/javascript" src="assets/javascripts/bootstrap/bootstrap-collapse.js"></script>
+    <script type="text/javascript" src="assets/javascripts/bootstrap/bootstrap-carousel.js"></script>
+    <script type="text/javascript" src="assets/javascripts/bootstrap/bootstrap-typeahead.js"></script>
+    <script type="text/javascript" src="assets/javascripts/lib/json2.js"></script>
+    <script type="text/javascript" src="assets/javascripts/lib/underscore.js"></script>  
+    <script type="text/javascript" src="assets/javascripts/lib/coffee-script.js"></script>
+    <script type="text/javascript" src="assets/javascripts/lib/knockout.js"></script>
+    <script type="text/javascript" src="assets/javascripts/lib/es5-shim.js"></script>
+    <script type="text/javascript" src="assets/javascripts/versu/no-console.js"></script>
+    <script type="text/javascript" src="assets/javascripts/versu/namespaces.js"></script>
+    <script type="text/javascript" src="assets/javascripts/versu/constants.js"></script>
+    <script type="text/javascript" src="assets/javascripts/versu/util.js"></script>
+    <script type="text/javascript" src="assets/javascripts/versu/config.js"></script>
+    <script type="text/javascript" src="assets/javascripts/versu/messaging.js"></script>
+    <script type="text/javascript" src="assets/javascripts/versu/app.js"></script>
+    <script type="text/javascript" src="assets/javascripts/versu/view-models/client-state.js"></script>
+    <script type="text/javascript" src="assets/javascripts/versu/view-models/character.js"></script>
+    <script type="text/javascript" src="assets/javascripts/versu/view-models/scenario.js"></script>
+    <script type="text/javascript" src="assets/javascripts/versu/view-models/affordance.js"></script>
+    <script type="text/javascript" src="assets/javascripts/versu/view-models/story.js"></script>
+    <script type="text/javascript" src="assets/javascripts/versu/controls/character-carousel.js"></script>
+    <script type="text/javascript" src="assets/javascripts/versu/controls/choose-character-list.js"></script>
+    <script type="text/javascript" src="assets/javascripts/versu/controls/choose-scenario-list.js"></script>
+    <script type="text/javascript" src="assets/javascripts/versu/controls/affordance-accordion.js"></script>
+    <script type="text/javascript" src="assets/javascripts/versu/controls/story-box.js"></script>
+    <script type="text/javascript" src="assets/javascripts/versu/controls/header-info.js"></script>
+    <script type="text/javascript" src="assets/javascripts/versu/controls/action-buttons.js"></script>  
+    
+  </head>
+
+  <body>
+
+
+    <div id="container" class="container">
+
+      <header class="jumbotron">
+      </header>
+      
+      <div id="panels">
+        
+        <div class="panel" id="game-panel">
+          <div class="component" id="story-box">
+            <div id="story" data-bind="visible: doStoryItemsExist(), foreach: storyList">
+              <p class="story-entry">
+                <span class="actor-name" data-bind="text: $data.actor"></span>:
+                <span class="dialogue" data-bind="text: $data.dialogue"></span>
+              </p>
+            </div>
+          </div>
+          
+          <div class="component" id="affordance-accordion">
+            <div class="accordion" id="affordances"
+                 data-bind="visible: doAffordanceCategoriesExist(),
+                            foreach: affordanceCategories">
+              <div class="accordion-group">
+                <div class="accordion-heading">
+                  <a href=""
+                    class="affordance-category-link accordion-toggle"
+                    data-toggle="collapse"
+                    data-parent="#affordances"
+                    data-bind="text: $data.category_label, attr: {
+                      href: versu.viewModels.affordanceViewModel.composeAccordionCategoryLink( $index() ) }">
+                  </a>
+                </div>
+                <div class="accordion-body collapse" data-bind="attr: {
+                    id: versu.viewModels.affordanceViewModel.composeAccordionCategoryID( $index() ),
+                    class: versu.viewModels.affordanceViewModel.getAccordionBodyClasses( $index() ) }">
+                  <div class="accordion-inner" data-bind="foreach: category_affordances">
+                    <div class="affordance">
+                      <a rel="" href="javascript:;" class="affordance-link"
+                        data-bind="text: $data.label, attr: { rel: $data.id }"></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>   
+          </div>
+          
+          
+          
+         
+          <!--
+          
+          <div class="component" id="character-carousel">
+            <h2>Character Carousel</h2>
+            <div id="characters" data-bind="visible: doCharactersExist(), foreach: characters">
+              <div class="character">
+                <a rel="" href="javascript:;" class="character-graphic-href"
+                  data-bind="attr: { rel: $data.id }">
+                  <img alt="" src="" class="character-graphic"
+                      data-bind="attr: { src: versu.viewModels.characterViewModel.composeImageURL($data), alt: $data.display_name }">
+                </a>
+                <p class="character-name" data-bind="text: $data.display_name"></p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="component" id="choose-scenario-list">
+            <h2>Choose Scenario List</h2>
+            <div id="scenarios" data-bind="visible: doScenariosExist()">
+              <h3>New Scenarios</h3>
+              <ul id="new-scenarios" class="scenario-list" data-bind="foreach: newScenarios">
+                <li class="scenario">
+                  <a rel="" href="javascript:;" class="scenario-href"
+                    data-bind="text: $data.label, attr: { rel: $data.id }">
+                  </a>
+                </li>
+              </ul>
+              <h3>Joinable Scenarios</h3>
+              <ul id="join-scenarios" class="scenario-list" data-bind="foreach: joinScenarios">
+                <li class="scenario">
+                  <a rel="" href="javascript:;" class="scenario-href"
+                    data-bind="text: $data.label, attr: { rel: $data.id }">
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+         
+
+          <div class="component" id="story-box">
+            <h2>Story Box</h2>
+            <div id="story" data-bind="visible: doStoryItemsExist(), foreach: storyList">
+              <p class="story-entry">
+                <span class="actor-name" data-bind="text: $data.actor"></span>:
+                <span class="dialogue" data-bind="text: $data.dialogue"></span>
+              </p>
+            </div>
+          </div>
+          
+          <div class="component" id="action-buttons">
+            <h2>Action Buttons</h2>
+            <div id="actions">
+              <button id="act-now-button" class="button">Act Now</button>
+              <button id="continue-button" class="button">Continue</button>
+            </div>
+          </div>
+          
+          <div class="component" id="choose-character-list">
+            <h2>Choose Character</h2>
+            <div id="choose-characters" data-bind="visible: doChooseCharactersExist(), foreach: chooseCharacters">
+              <div class="character">
+                <a rel="" href="javascript:;" class="character-graphic-href"
+                  data-bind="attr: { rel: $data.id }">
+                  <img alt="" src="" class="character-graphic"
+                      data-bind="attr: { src: versu.viewModels.characterViewModel.composeImageURL($data), alt: $data.display_name }">
+                </a>
+                <p class="character-name" data-bind="text: $data.display_name"></p>
+              </div>
+            </div>
+          </div>
+          -->
+          
+          
+        </div>
+        
+      </div>
+
+      <footer class="footer">
+      </footer>
+
+    </div>
+
+
+  </body>
+</html>
+

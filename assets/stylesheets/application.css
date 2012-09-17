@@ -1,0 +1,32 @@
+html,
+body {
+  height: 100%;
+}
+root { 
+  display: block;
+}
+pre {
+  margin: 15px 0;
+}
+.panel {
+  clear: both;
+}
+#container,
+#panels {
+  position: relative;
+  height: 100%;
+}
+#game-panel {
+  margin-left: 300px;
+  position: absolute;
+  bottom: 0;
+}
+.component {
+  height: auto;
+}
+
+#messages-panel {
+  clear: left;
+}
+
+

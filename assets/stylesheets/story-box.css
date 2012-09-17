@@ -1,0 +1,6 @@
+#story-box {
+  background-color: #eee;
+  height: 250px;
+  padding: 5px 20px;
+  overflow-y: auto;
+}
